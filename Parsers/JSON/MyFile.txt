@@ -1,1 +1,0 @@
-{"a":1,"b":{"classname":"A","funcs":{"test":("        print('test1')","        print('test12')"),"test2":("        print('test21')","        print('test22')","        if 1 == 1:","            print('yes')")},"attrs":{"age":"test","name":"name"}}}
