@@ -44,3 +44,5 @@ class Parser():
     def loads(cls, str):
         json = cls.parse(str)
         return json
+
+

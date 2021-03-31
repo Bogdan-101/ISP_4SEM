@@ -8,11 +8,11 @@ class JSON(Parser):
     def serialize_str_int(key, value):
         if type(value) is str:
             value = JSON_QUOTE + value + JSON_QUOTE
-        if type(value) is int:
+        else:
             value = str(value)
         if type(key) is str:
             key = JSON_QUOTE + key + JSON_QUOTE
-        if type(key) is int:
+        else:
             key = str(key)
         return key + ':' + value
 
@@ -20,7 +20,7 @@ class JSON(Parser):
     def serialize(obj):
         string = '{'
         for key, value in obj.items():
-            if type(value) is str or type(value) is int:
+            if type(value) is str or type(value) is int or type(value) is float or type(value) is complex:
                 string += JSON.serialize_str_int(key, value)
             if type(value) is dict:
                 key_string = str(key)
@@ -140,7 +140,7 @@ class JSON(Parser):
 
         if string_len >= NULL_LEN and \
                 string[:NULL_LEN] == 'null':
-            return True, string[NULL_LEN]
+            return True, string[NULL_LEN:]
 
         return None, string
 
@@ -202,7 +202,7 @@ class JSON(Parser):
         raise Exception('Expected end-of-array bracket')
 
     @staticmethod
-    def parse_object(tokens):
+    def parse_object(tokens, isBuffer=False):
         json_object = {}
 
         t = tokens[0]
@@ -219,13 +219,13 @@ class JSON(Parser):
             if tokens[0] != JSON_COLON:
                 raise Exception('Expected colon after key in object, got: {}'.format(t))
 
-            json_value, tokens = JSON.parse_json(tokens[1:])
+            json_value, tokens = JSON.parse_json(tokens[1:], isBuffer)
 
-            if type(json_value) is not int and "code" in json_value:
+            if type(json_value) is not int and "code" in json_value and isBuffer is False:
                 func_object = {}
                 exec(json_value["code"], {}, func_object)
                 json_object[json_key] = func_object[json_value["func_name"]]
-            elif type(json_value) is not int and "classname" in json_value:
+            elif type(json_value) is not int and "classname" in json_value and isBuffer is False:
                 attr_dict = {}
                 if json_value["attrs"] != 'None' and json_value["attrs"] != {}:
                     for attr in json_value["attrs"]:
@@ -252,13 +252,13 @@ class JSON(Parser):
         raise Exception('Expected end-of-object bracket')
 
     @staticmethod
-    def parse(str):
+    def parse(str, isBuffer=False):
         tokens = JSON.lex(str)
-        json, tokens = JSON.parse_json(tokens)
+        json, tokens = JSON.parse_json(tokens, isBuffer)
         return json
 
     @staticmethod
-    def parse_json(tokens, is_root=False):
+    def parse_json(tokens, isBuffer, is_root=False):
         t = tokens[0]
 
         if is_root and t != JSON_LEFTBRACE:
@@ -267,6 +267,6 @@ class JSON(Parser):
         if t == JSON_LEFTBRACKET:
             return JSON.parse_array(tokens[1:])
         elif t == JSON_LEFTBRACE:
-            return JSON.parse_object(tokens[1:])
+            return JSON.parse_object(tokens[1:], isBuffer)
         else:
             return t, tokens[1:]

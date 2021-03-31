@@ -1,5 +1,9 @@
-from JSON import JSON
-from Pickle import Pickle
+import json
+
+from JSON import *
+from Factory import Creator
+import yaml
+from TOML import TOML
 
 
 class C:
@@ -33,15 +37,11 @@ def testing():
 
 
 if __name__ == '__main__':
-    print({(1, 2, 3): 1})
-    print(type(list([1, 2, 3])))
-    str = JSON().dumps({"b": A, "c": testing, "a": 1})
-    json = JSON().loads(str)
-    print(json, str)
-    a = json["b"]()
-    a.test2()
+    # a = Creator.createSerializer({"b": A, "c": testing, "a": 1}, type='pickle')
+    # obj = Creator.createDeserializer(a, type='pickle')
 
-    try:
-        raise KeyError
-    except Exception:
-        print('yes')
+    # a = TOML.serialize({"b": A, "c": testing, "a": 1})
+    # a_obj = TOML.parse(a)
+    # print(type(a_obj["b"]))
+    # aa = a_obj["b"]()
+    pass

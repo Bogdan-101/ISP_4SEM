@@ -1,12 +1,14 @@
 from Parser import Parser
-from const import *
+import pickle
 
 
 class Pickle(Parser):
     @staticmethod
     def serialize(obj):
-        print('pickle serialize')
+        str = pickle.dumps(obj)
+        return str
 
     @staticmethod
     def parse(str):
-        print('pickle parse')
+        obj = pickle.loads(str)
+        return obj
