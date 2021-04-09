@@ -82,6 +82,14 @@ class TestJSON(unittest.TestCase):
         self.assertEqual(self.json.serialize({"b": A, "c": testing, "a": 1}),
                          '{"b":{"classname":"A","funcs":{"__init__":{"func_name":"__init__","code":"        def __init__(self):\n            print(\'init\')\n"},"test":{"func_name":"test","code":"        def test(self):\n            print(\'test1\')\n            print(\'test12\')\n"},"test2":{"func_name":"test2","code":"        def test2(self):\n            print(\'test21\')\n            print(\'test22\')\n"}},"attrs":{"age":"test","name":"name"},"supers":{"classname":"B","funcs":"None","attrs":"None","supers":{"classname":"C","funcs":"None","attrs":"None"}}},"c":{"func_name": "testing", "code":"        def testing():\n            print(\'31\')\n            print(\'32\')\n            return 5\n"},"a":1}')
 
+    def testSerialize_lambda(self):
+        fff = lambda: 6
+        obj = {"a": fff}
+        self.assertEqual(self.json.serialize(obj), '{"a":{"func_name": "fff", "code":"        fff = lambda: 6\n"}}')
+        fff = lambda x: 6
+        obj = {"a": fff}
+        self.assertEqual(self.json.serialize(obj), '{"a":{"func_name": "fff", "code":"        fff = lambda x: 6\n"}}')
+
     def testLex_string(self):
         self.assertEqual(self.json.lex_string('"test"'), ('test', ''))
         self.assertEqual(self.json.lex_string('"test":"testing strings"'), ('test', ':"testing strings"'))
@@ -117,6 +125,10 @@ class TestJSON(unittest.TestCase):
 
     def testParse(self):
         self.assertEqual(self.json.parse('{"a": [1, 2, 3], 1: 2}'), {1: 2, 'a': [1, 2, 3]})
+
+    def testParse_lambda(self):
+        # self.assertEqual(self.json.parse('{"a":{"func_name": "fff", "code":"fff = lambda: 6\n"},"b":2}'), {"a":lambda:6, "b": 2})
+        self.assertEqual(self.json.parse('{"a":{"func_name": "fff", "code":"fff = lambda: 6\n"},"b":2}')["a"](), 6)
 
     def testJSON_parser(self):
         obj = {'a': 1}

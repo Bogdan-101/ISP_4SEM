@@ -57,8 +57,16 @@ class JSON(Parser):
 
     @staticmethod
     def serialize_function(func):
+        true_func_name = func.__name__
+        # if func.__name__ == '<lambda>':
+        #     saving_func = func
+        #     print('yes')
+        if type(func) is types.LambdaType and func.__name__ == '<lambda>':
+            func_name = inspect.getsource(func).split('=')[0]
+            func_name = func_name.strip()
+            true_func_name = func_name
         func_source = inspect.getsource(func)
-        func_name = '{"func_name": "' + func.__name__ + JSON_QUOTE
+        func_name = '{"func_name": "' + true_func_name + JSON_QUOTE
         return func_name + ', "code":' + JSON_QUOTE + func_source + JSON_QUOTE + '}'
 
     @staticmethod
