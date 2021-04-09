@@ -36,7 +36,7 @@ class Parser():
         return cls.serialize(obj)
 
     @classmethod
-    def load(cls, pf, isPickle=False):
+    def load(cls, pf, isPickle=False, isBuffer=False):
         if pf[:2] == './':
             pf = pf[2:]
         try:
@@ -45,13 +45,13 @@ class Parser():
             else:
                 file = open(pf, 'rb')
             str = file.read()
-            return cls.loads(str)
+            return cls.loads(str, isBuffer)
         except Exception as e:
             print('There is no such file by path: ' + pf)
 
     @classmethod
-    def loads(cls, str):
-        json = cls.parse(str)
+    def loads(cls, str, isBuffer=False):
+        json = cls.parse(str, isBuffer)
         return json
 
 

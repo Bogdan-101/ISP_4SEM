@@ -12,8 +12,10 @@ class TOML(Parser):
         return str
 
     @staticmethod
-    def parse(str):
+    def parse(str, isBuffer=False):
         raw_obj = toml.loads(str)
+        if isBuffer is True:
+            return raw_obj
         for key in raw_obj:
             if type(raw_obj[key]) is not int and "code" in raw_obj[key]:
                 func_object = {}

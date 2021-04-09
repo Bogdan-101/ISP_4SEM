@@ -1,1 +1,1 @@
-{"a":{"classname":"A","funcs":"None","attrs":{"name":"name","test":""},"supers":{"classname":"B","funcs":"None","attrs":{"test":"test"},"supers":{"classname":"C","funcs":"None","attrs":{"test":"test"}}}}}
+{"a":{"attrs":{"name":"name","test":"test"},"classname":"A","funcs":"None","supers":{"attrs":{"test":"test"},"classname":"B","funcs":"None","supers":{"attrs":{"test":"test"},"classname":"C","funcs":"None"}}}}

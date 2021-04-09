@@ -37,18 +37,13 @@ def testing():
     return x
 
 
+fff = lambda: 6
+
 if __name__ == '__main__':
-    obj = {"a": testing}
-    g = testing.__globals__
-    str = inspect.getsource(testing)
-    print(str)
-    f = {"g": g}
-    exec(str, f)
-    print(f["testing"]())
-    # str = Creator.createSerializer(obj)
-    # print(str)
-    # o = Creator.createDeserializer(str)
-    # print(o)
+    obj = {"a": fff}
+    a = inspect.getsource(obj["a"]).split('=')[0]
+    print('|' + a[:(len(a) - 1)] + '|')
+
     # if args.type.lower() == 'json':
     #     dest_ext = 'json'
     # elif args.type.lower() == 'yaml':
@@ -76,7 +71,7 @@ if __name__ == '__main__':
     #           "into the same type! See you later!")
     #     exit()
     #
-    # obj = Creator.createDeserializer(type=start_ext[1:], filePath=args.start)
+    # obj = Creator.createDeserializer(type=start_ext[1:], filePath=args.start, isBuffer=True)
     #
     # if args.dest is not None:
     #     pf = args.dest

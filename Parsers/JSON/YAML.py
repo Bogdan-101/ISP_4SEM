@@ -9,6 +9,6 @@ class YAML(Parser):
         return str
 
     @staticmethod
-    def parse(str):
+    def parse(str, isBuffer=False):
         obj = yaml.load(str, Loader=yaml.FullLoader)
         return obj

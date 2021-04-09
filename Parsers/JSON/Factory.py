@@ -30,7 +30,7 @@ class Creator(ABC):
             return 'Done by path ' + filePath
 
     @staticmethod
-    def createDeserializer(str='', type='JSON', filePath=''):
+    def createDeserializer(str='', type='JSON', filePath='', isBuffer=False):
         parser = None
         if type.lower() == 'json':
             parser = JSON()
@@ -48,7 +48,7 @@ class Creator(ABC):
             return obj
         else:
             if type.lower() == 'pickle':
-                obj = parser.load(filePath, isPickle=True)
+                obj = parser.load(filePath, isPickle=True, isBuffer=isBuffer)
             else:
-                obj = parser.load(filePath)
+                obj = parser.load(filePath, isBuffer=isBuffer)
             return obj
