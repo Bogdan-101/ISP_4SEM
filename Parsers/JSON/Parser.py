@@ -15,26 +15,35 @@ class Parser():
         raise NotImplementedError()
 
     @classmethod
-    def dump(cls, obj, pf):
+    def dump(cls, obj, pf, isPickle=False):
         str = cls.serialize(obj)
-        if pf[:2] == './':
-            pf = pf[2:]
-        if os.path.isfile(pf):
-            print('File by this path will be overridden')
-        file = open(pf, 'w')
-        file.write(str)
-        file.close()
+        try:
+            if pf[:2] == './':
+                pf = pf[2:]
+            if os.path.isfile(pf):
+                print('File by this path will be overridden')
+            if isPickle is False:
+                file = open(pf, 'w')
+            else:
+                file = open(pf, 'wb')
+            file.write(str)
+            file.close()
+        except Exception as e:
+            print('There is no such file by path: ' + pf)
 
     @classmethod
     def dumps(cls, obj):
         return cls.serialize(obj)
 
     @classmethod
-    def load(cls, pf):
+    def load(cls, pf, isPickle=False):
         if pf[:2] == './':
             pf = pf[2:]
         try:
-            file = open(pf, 'r')
+            if isPickle is False:
+                file = open(pf, 'r')
+            else:
+                file = open(pf, 'rb')
             str = file.read()
             return cls.loads(str)
         except Exception as e:

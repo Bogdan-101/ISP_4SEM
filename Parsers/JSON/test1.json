@@ -1,0 +1,1 @@
+{"a":{"classname":"A","funcs":"None","attrs":{"name":"name","test":""},"supers":{"classname":"B","funcs":"None","attrs":{"test":"test"},"supers":{"classname":"C","funcs":"None","attrs":{"test":"test"}}}}}

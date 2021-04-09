@@ -7,8 +7,7 @@ from TOML import TOML
 
 class Creator(ABC):
     @staticmethod
-    def createSerializer(obj, type='JSON', filePath=''):
-        parser = None
+    def createSerializer(obj={}, type='JSON', filePath=''):
         if type.lower() == 'json':
             parser = JSON()
         elif type.lower() == 'pickle':
@@ -17,12 +16,17 @@ class Creator(ABC):
             parser = YAML()
         elif type.lower() == 'toml':
             parser = TOML()
+        else:
+            raise Exception('Unknown type! Type must be JSON/TOML/YAML/Pickle')
 
         if filePath == '':
             str = parser.dumps(obj)
             return str
         else:
-            parser.dump(obj, filePath)
+            if type.lower() == 'pickle':
+                parser.dump(obj, filePath, isPickle=True)
+            else:
+                parser.dump(obj, filePath)
             return 'Done by path ' + filePath
 
     @staticmethod
@@ -32,10 +36,19 @@ class Creator(ABC):
             parser = JSON()
         elif type.lower() == 'pickle':
             parser = Pickle()
+        elif type.lower() == 'toml':
+            parser = TOML()
+        elif type.lower() == 'yaml':
+            parser = YAML()
+        else:
+            raise Exception('Unknown type! Type must be JSON/TOML/YAML/Pickle')
 
         if filePath == '':
             obj = parser.loads(str)
             return obj
         else:
-            obj = parser.load(filePath)
+            if type.lower() == 'pickle':
+                obj = parser.load(filePath, isPickle=True)
+            else:
+                obj = parser.load(filePath)
             return obj

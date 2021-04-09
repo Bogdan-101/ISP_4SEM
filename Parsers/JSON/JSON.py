@@ -1,6 +1,7 @@
 from Parser import Parser
 from const import *
 import inspect
+import types
 
 
 class JSON(Parser):
@@ -37,8 +38,21 @@ class JSON(Parser):
                 if type(key) is str:
                     key_string = JSON_QUOTE + key_string + JSON_QUOTE
                 string += key_string + ':' + JSON.serialize_function(value)
+            if type(value) is list:
+                key_string = str(key)
+                if type(key) is str:
+                    key_string = JSON_QUOTE + key_string + JSON_QUOTE
+                string += key_string + ':' + JSON.serialize_list(value)
             string += JSON_COMMA
         string = string[:(len(string) - 1)] + '}'
+        return string
+
+    @staticmethod
+    def serialize_list(val):
+        string = '['
+        for value in val:
+            string += JSON_QUOTE + str(value) + JSON_QUOTE + ', '
+        string = string[:(len(string) - 2)] + ']'
         return string
 
     @staticmethod
@@ -51,9 +65,12 @@ class JSON(Parser):
     def serialize_class(cls):  # TODO: sort built-in and custom attributes the right way
         functions = inspect.getmembers(cls, predicate=inspect.isfunction)
         supers = ''
-        for cl in cls.__bases__:
-            if cl.__name__ != 'object':
-                supers += ',"supers":' + JSON.serialize_class(cl)
+        if cls.__bases__[0] != "object":
+            for cl in cls.__bases__:
+                if cl.__name__ != 'object':
+                    supers += ',"supers":' + JSON.serialize_class(cl)
+        else:
+            supers = ',"supers":' + '"None"'
         if len(functions) > 0:
             func_string = '"funcs":{'
             for func in functions:
@@ -180,7 +197,7 @@ class JSON(Parser):
         return tokens
 
     @staticmethod
-    def parse_array(tokens):
+    def parse_array(tokens, isBuffer):
         json_array = []
 
         t = tokens[0]
@@ -188,7 +205,7 @@ class JSON(Parser):
             return json_array, tokens[1:]
 
         while True:
-            json, tokens = JSON.parse_json(tokens)
+            json, tokens = JSON.parse_json(tokens, isBuffer)
             json_array.append(json)
 
             t = tokens[0]
@@ -223,19 +240,22 @@ class JSON(Parser):
 
             if type(json_value) is not int and "code" in json_value and isBuffer is False:
                 func_object = {}
-                exec(json_value["code"], {}, func_object)
+                exec(json_value["code"], func_object)
                 json_object[json_key] = func_object[json_value["func_name"]]
             elif type(json_value) is not int and "classname" in json_value and isBuffer is False:
                 attr_dict = {}
+                super_tuple = tuple()
                 if json_value["attrs"] != 'None' and json_value["attrs"] != {}:
                     for attr in json_value["attrs"]:
                         attr_dict[attr] = json_value["attrs"][attr]
-                if json_value["funcs"] != 'None' and json_value["attrs"] != {}:
+                if json_value["funcs"] != 'None' and json_value["funcs"] != {}:
                     for func in json_value["funcs"]:
                         attr_dict[func] = json_value["funcs"][func]
+                if "supers" in json_value and json_value["supers"] != 'None' and json_value["supers"] != {}:
+                    super_tuple += (json_value["supers"],)
                 json_object[json_key] = type(
                     json_value["classname"],
-                    (),
+                    super_tuple,
                     attr_dict
                 )
             else:
@@ -265,7 +285,7 @@ class JSON(Parser):
             raise Exception('Root must be an object')
 
         if t == JSON_LEFTBRACKET:
-            return JSON.parse_array(tokens[1:])
+            return JSON.parse_array(tokens[1:], isBuffer)
         elif t == JSON_LEFTBRACE:
             return JSON.parse_object(tokens[1:], isBuffer)
         else:

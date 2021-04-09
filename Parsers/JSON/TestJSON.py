@@ -107,13 +107,13 @@ class TestJSON(unittest.TestCase):
              'abc', '}'])
 
     def testParse_array(self):
-        self.assertEqual(self.json.parse_array([1, ',', 2, ',', 3, ']']), ([1, 2, 3], []))
+        self.assertEqual(self.json.parse_array([1, ',', 2, ',', 3, ']'], isBuffer=False), ([1, 2, 3], []))
 
     def testParse_object(self):
         self.assertEqual(self.json.parse_object(['a', ':', '1', '}']), ({"a": '1'}, []))
 
     def testParse_json(self):
-        self.assertEqual(self.json.parse_json(['{', 'a', ':', '[', 1, ',', 2, ',', 3, ']', ',', 1, ':', 2, '}']), ({1: 2, 'a': [1, 2, 3]}, []))
+        self.assertEqual(self.json.parse_json(['{', 'a', ':', '[', 1, ',', 2, ',', 3, ']', ',', 1, ':', 2, '}'], isBuffer=False), ({1: 2, 'a': [1, 2, 3]}, []))
 
     def testParse(self):
         self.assertEqual(self.json.parse('{"a": [1, 2, 3], 1: 2}'), {1: 2, 'a': [1, 2, 3]})
