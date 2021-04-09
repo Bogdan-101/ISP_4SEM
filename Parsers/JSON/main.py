@@ -3,19 +3,7 @@ import inspect
 
 from Factory import Creator
 import argparse
-import json
 import os
-
-
-# converter --from "PATHTOORIG" -t JSON --WHERE "PATHTODEST"
-parser = argparse.ArgumentParser(description='Convert files from one notation into another')
-parser.add_argument('-t', '--type', type=str, metavar='T', required=True,
-                    help='Type of converter(JSON, TOML, YAML, Pickle). In this format your file will be converted')
-parser.add_argument('-s', '--start', type=str, metavar='S', required=True,
-                    help='Path to starting file')
-parser.add_argument('-d', '--dest', type=str, metavar='D',
-                    help='Path to file where to put the result of convertation')
-args = parser.parse_args()
 
 
 def main():
@@ -54,3 +42,16 @@ def main():
         pf = args.start[:(len(args.start) - len(start_ext))] + "." + dest_ext
 
     Creator.createSerializer(obj, dest_ext, pf)
+
+
+
+# converter --from "PATHTOORIG" -t JSON --WHERE "PATHTODEST"
+parser = argparse.ArgumentParser(description='Convert files from one notation into another')
+parser.add_argument('-t', '--type', type=str, metavar='T', required=True,
+                    help='Type of converter(JSON, TOML, YAML, Pickle). In this format your file will be converted')
+parser.add_argument('-s', '--start', type=os.path.abspath, metavar='S', required=True,
+                    help='Path to starting file')
+parser.add_argument('-d', '--dest', type=os.path.abspath, metavar='D',
+                    help='Path to file where to put the result of convertation')
+args = parser.parse_args()
+
