@@ -8,7 +8,7 @@ setup(
     author='Anomie',
     author_email='big_bogdan@rambler.ru',
     description='Module for converting to most popular notations (such as JSON, TOML, YAML or Pickle)',
-    packages=find_packages(exclude=()),
+    packages=find_packages('.'),
     entry_points={
         'console_scripts': [
             'converter=Parsers.JSON.main:main',

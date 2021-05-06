@@ -58,15 +58,24 @@ class JSON(Parser):
     @staticmethod
     def serialize_function(func):
         true_func_name = func.__name__
-        # if func.__name__ == '<lambda>':
-        #     saving_func = func
-        #     print('yes')
         if type(func) is types.LambdaType and func.__name__ == '<lambda>':
             func_name = inspect.getsource(func).split('=')[0]
             func_name = func_name.strip()
             true_func_name = func_name
         func_source = inspect.getsource(func)
-        func_name = '{"func_name": "' + true_func_name + JSON_QUOTE
+        f_glob = {}
+        var_arr = []
+        if func_source.__contains__('global'):
+            var_arr = func_source.split('global')
+            for ind in range(len(var_arr)):
+                var_arr[ind] = var_arr[ind][:var_arr[ind].find('\n')].lstrip()
+            var_arr.pop(0)
+        for ind in range(len(var_arr)):
+            f_glob[var_arr[ind]] = func.__globals__[var_arr[ind]]
+        f_str = ''
+        if var_arr:
+            f_str = ', "globals": ' + JSON.serialize(f_glob)
+        func_name = '{"func_name": "' + true_func_name + JSON_QUOTE + f_str
         return func_name + ', "code":' + JSON_QUOTE + func_source + JSON_QUOTE + '}'
 
     @staticmethod
@@ -248,6 +257,8 @@ class JSON(Parser):
 
             if type(json_value) is not int and "code" in json_value and isBuffer is False:
                 func_object = {}
+                if "globals" in json_value:
+                    func_object = json_value["globals"]
                 exec(json_value["code"], func_object)
                 json_object[json_key] = func_object[json_value["func_name"]]
             elif type(json_value) is not int and "classname" in json_value and isBuffer is False:

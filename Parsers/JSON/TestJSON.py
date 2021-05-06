@@ -34,7 +34,6 @@ class TestJSON(unittest.TestCase):
 
         self.assertEqual(self.json.serialize_function(testFunc),
                          '{"func_name": "testFunc", "code":"        def testFunc(testArg1, testArg2):\n            print(\'this is test function\')\n            print(testArg2)\n            return testArg1\n"}')
-
         def testFunc2(args):
             a = 1 + 1 ** 10
             print(a)
@@ -84,7 +83,7 @@ class TestJSON(unittest.TestCase):
 
     def testSerialize_lambda(self):
         fff = lambda: 6
-        obj = {"a": fff}
+        obj = {"a": lambda: 6}
         self.assertEqual(self.json.serialize(obj), '{"a":{"func_name": "fff", "code":"        fff = lambda: 6\n"}}')
         fff = lambda x: 6
         obj = {"a": fff}

@@ -55,3 +55,5 @@ parser.add_argument('-d', '--dest', type=os.path.abspath, metavar='D',
                     help='Path to file where to put the result of convertation')
 args = parser.parse_args()
 
+main()
+
