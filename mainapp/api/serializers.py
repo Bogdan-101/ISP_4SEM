@@ -28,6 +28,13 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class ThreadSerializer(serializers.ModelSerializer):
+
+    comments = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_comments(obj):
+        return CommentSerializer(Comment.objects.filter(related_thread=obj), many=True).data
+
     class Meta:
         model = Thread
         fields = '__all__'
