@@ -1,4 +1,5 @@
 from django.db import models
+# from django.contrib.auth.models import User
 
 
 class Board(models.Model):
@@ -28,9 +29,10 @@ class ThreadManager(models.Manager):
 
 
 class Thread(models.Model):
-    blog_category = models.ForeignKey(Board, verbose_name="Имя категории", on_delete=models.CASCADE)
+    blog_category = models.ForeignKey(Board, verbose_name="Имя категории", on_delete=models.CASCADE, blank=True)
+    # owner = models.ForeignKey(User, related_name="thread_owner", on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255, verbose_name="Название")
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True)
     content = models.TextField()
     image = models.ImageField(upload_to='blog_posts/', blank=True, null=True)
     pub_date = models.DateTimeField(auto_now=True)
@@ -43,7 +45,7 @@ class Thread(models.Model):
 
 class Comment(models.Model):
     related_thread = models.ForeignKey(Thread, verbose_name="Имя треда", on_delete=models.CASCADE,
-                                       related_name="comments")
+                                       related_name="comments", blank=True)
 
     content = models.TextField()
     image = models.ImageField(upload_to='blog_posts/', blank=True, null=True)
