@@ -1,0 +1,22 @@
+.header {
+    height: 30px;
+    padding: 5px;
+    border-bottom: 1px solid var(--theme_default_postbg);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.header__link {
+    vertical-align: baseline;
+    text-decoration: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 100%;
+    color: var(--theme_default_link);
+    padding-right: 4px;
+}
+
+.header__link:hover {
+    outline: 0;
+    color: var(--theme_default_hover);
+}

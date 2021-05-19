@@ -21,7 +21,7 @@ from mainapp.views import index, board_detail, thread_detail
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
-    path('board/<int:id>', board_detail),
-    path('thread/<int:id>', thread_detail),
+    # path('board/<int:id>', board_detail),
+    # path('thread/<int:id>', thread_detail),
     path('api/', include('mainapp.api.urls'))
 ]

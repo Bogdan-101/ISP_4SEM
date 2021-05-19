@@ -1,0 +1,25 @@
+.draggable {
+    position: absolute;
+    min-width: 370px;
+    z-index: 980;
+    box-sizing: border-box;
+    background: var(--theme_default_postbg);
+    border: solid 1px var(--theme_default_border);
+    padding: 2px;
+}
+
+.draggable__header {
+    margin-bottom: 1px;
+    padding: 4px;
+    cursor: move;
+    background: var(--theme_default_spoiler);
+    font-size: 14px;
+    text-align: center;
+}
+
+.draggable__close {
+    float: right;
+    padding: 0 4px;
+    font-weight: bold;
+    cursor: pointer;
+}

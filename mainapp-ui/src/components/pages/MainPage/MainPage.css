@@ -1,0 +1,53 @@
+.content {
+    width: 1050px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.content__block {
+    margin: 30px 0;
+    padding: 20px;
+    background: white;
+    border: solid 1px #d2d2d2;
+}
+
+.welcome {
+    text-align: center;
+    clear: both;
+    padding-top: 20px;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.welcome__img {
+    width: 300px;
+}
+
+.welcome__friend {
+    color: rgb(255, 112, 0);
+    font-family: Verdana, sans-serif;
+    font-size: 18px;
+}
+
+.greeting {
+    font-size: 15px;
+}
+
+.content__anon {
+    width: -moz-available;
+}
+
+.content__threads {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.thread {
+    display: block;
+}
+
+.thread__link {
+    text-decoration: none;
+    color: rgb(255, 112, 0);;
+}

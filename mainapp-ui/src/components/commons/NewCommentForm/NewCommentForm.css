@@ -1,0 +1,15 @@
+.form {
+    width: 750px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form__textarea {
+    min-height: 300px;
+}
+
+.form__submit {
+
+}
