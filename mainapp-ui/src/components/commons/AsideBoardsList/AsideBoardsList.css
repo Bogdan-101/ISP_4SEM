@@ -1,0 +1,16 @@
+.board__navigation {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    padding: 10px;
+    width: 15vw;
+    height: 100vh;
+    position: sticky;
+    top: 50px;
+}
+
+.board__threadLink {
+    text-decoration: none;
+    color: #a74300;
+    margin-bottom: 5px;
+}

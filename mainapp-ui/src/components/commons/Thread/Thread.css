@@ -1,0 +1,23 @@
+.thread {
+    position: relative;
+    border-bottom: 1px solid #d2d2d2;
+    padding: 10px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+}
+
+.thread__title {
+    text-align: end;
+}
+
+.thread__text {
+    margin: 16px 36px;
+    font-size: 15px;
+    line-height: 1.3;
+    color: var(--theme_default_text);
+}
+
+.thread__detail {
+    font-size: 0.9em;
+    color: var(--theme_default_alttext);
+}
