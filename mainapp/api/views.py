@@ -49,11 +49,6 @@ class ThreadViewSet(viewsets.ModelViewSet):
             return Response(ThreadSerializer(new_thread).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def destroy(self, request, *args, **kwargs):
-        thread_data = request.data
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
     def get_serializer_class(self):
         return self.action_to_serializer.get(
             self.action,
@@ -70,8 +65,8 @@ class CommentViewSet(viewsets.ModelViewSet):
 
         serializer = CommentSerializer(data=comment_data)
         if serializer.is_valid():
-            related_thread = Thread.objects.filter(id=comment_data["id"])
-            new_comment = Comment(related_thread=related_thread[0], content=comment_data["content"])
+            related_thread = Thread.objects.filter(id=comment_data["id"]).first()
+            new_comment = Comment(related_thread=related_thread, content=comment_data["content"])
             new_comment.save()
             return Response(CommentSerializer(new_comment).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
