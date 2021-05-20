@@ -18,7 +18,7 @@ class BoardDetailSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_posts(obj):
-        return ThreadSerializer(Thread.objects.filter(blog_category=obj), many=True).data
+        return ThreadSerializer(Thread.objects.filter(blog_category=obj).order_by('-pub_date'), many=True).data
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -33,7 +33,7 @@ class ThreadSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_comments(obj):
-        return CommentSerializer(Comment.objects.filter(related_thread=obj), many=True).data
+        return CommentSerializer(Comment.objects.filter(related_thread=obj).order_by('-pub_date'), many=True).data
 
     class Meta:
         model = Thread
@@ -51,4 +51,4 @@ class ThreadRetrieveSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_comments(obj):
-        return CommentSerializer(Comment.objects.filter(related_thread=obj), many=True).data
+        return CommentSerializer(Comment.objects.filter(related_thread=obj).order_by('-pub_date'), many=True).data
