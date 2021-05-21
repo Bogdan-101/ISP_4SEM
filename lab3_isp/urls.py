@@ -23,5 +23,6 @@ urlpatterns = [
     path('', index),
     # path('board/<int:id>', board_detail),
     # path('thread/<int:id>', thread_detail),
-    path('api/', include('mainapp.api.urls'))
+    path('api/', include('mainapp.api.urls')),
+    path('users/', include('users.urls'))
 ]

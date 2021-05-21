@@ -39,8 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'mainapp',
+    'users',
     'corsheaders',
+    'django_extensions'
 ]
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'users.exceptions.core_exception_handler',
+    'NON_FIELD_ERRORS_KEY': 'error',
+}
+
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'mainapp.middleware.RequestTimeMiddleware',
@@ -86,7 +95,7 @@ WSGI_APPLICATION = 'lab3_isp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
+        'NAME': 'isp_3lab_db',
         'USER': 'postgres',
         'PASSWORD': '1234',
         'HOST': 'localhost',
