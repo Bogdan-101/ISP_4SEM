@@ -1,0 +1,19 @@
+.wrapper {
+    width: -moz-fit-content;
+}
+
+.wrapper__link {
+    color: black;
+    text-decoration: none;
+    margin-right: 15px;
+    border: 1px solid var(--theme_default_link);
+    height: 20px;
+    padding: 7px;
+    border-radius: 10px;
+    background: white;
+    transition: all 1s ease;
+}
+
+.wrapper__link:hover {
+    background: var(--theme_default_btnbg);
+}

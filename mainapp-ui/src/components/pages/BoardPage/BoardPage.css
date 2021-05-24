@@ -1,5 +1,5 @@
 .board {
-    padding: 20px;
+    padding: 20px 0;
     background: #eee;
     min-height: 100vh;
     display: flex;

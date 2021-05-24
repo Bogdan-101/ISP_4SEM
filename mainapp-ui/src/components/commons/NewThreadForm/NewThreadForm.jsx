@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
+import { useSelector } from 'react-redux'
 import './NewThreadForm.css';
 
 
 export const NewThreadForm = ({ boardName, closeHandle }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const token = useSelector(state => state.login.token)
 
     function handleInputChange(e) {
         setTitle(e.target.value);
@@ -21,7 +23,8 @@ export const NewThreadForm = ({ boardName, closeHandle }) => {
         fetch(endpoint, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `token ${token}`
             },
             body: JSON.stringify(data)
         }).then((res) => res.json).then((data) => {

@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { SERVER_URL, POST_HEADERS } from "./constants";
+import { useSelector } from "react-redux";
 import { LoadingComponent } from "../components/commons/LoadingComponent";
 import axios from "axios";
 
@@ -7,16 +8,20 @@ export const useFetch = (path = SERVER_URL) => {
   const [serverResponse, setServerResponse] = useState(null);
   const [isError, setIsError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const token = useSelector((state) => state.login.token);
   const get = useCallback(
     async function (getPath) {
       setIsError(false);
       setServerResponse(null);
       setLoading(LoadingComponent);
-      axios(path.concat(getPath)).then(
+      axios(path.concat(getPath), {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      }).then(
         (res) => {
           setLoading(false);
           setServerResponse(res.data);
-          console.log(res.data);
           return res.data;
         },
         (err) => {

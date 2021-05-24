@@ -8,11 +8,14 @@ import { Header } from "../../commons/Header";
 import { AsideBoardsList } from "../../commons/AsideBoardsList";
 import { ThreadList } from "./ThreadList";
 import { useFetch } from "../../../helpers/useFetch";
+import { useSelector } from "react-redux";
+import { NotLoginSign } from "../../commons/NotLoginSign";
 
 export const BoardPage = ({ match }) => {
   const id = match.params.id;
   const [isCreate, setCreate] = useState(false);
   const [methods, res, loading, isError] = useFetch();
+  const isAuth = useSelector((state) => state.login.isAuth);
 
   useEffect(() => {
     methods.get(`/api/board/${id}/`);

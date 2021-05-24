@@ -1,0 +1,7 @@
+.validateIcon {
+    position: absolute;
+    font-size: 20px;
+    top: 8px;
+    width: min-content;
+    right: -30px;
+}

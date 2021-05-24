@@ -1,0 +1,33 @@
+.login {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: rgb(238, 238, 238);
+}
+
+.login__wrapper {
+  width: 40%;
+  height: fit-content;
+  padding: 30px 0;
+}
+
+.error {
+  width: 70%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  background: #f84343;
+  border-radius: 7px;
+}
+
+.error__text {
+  margin: 0 auto;
+  width: 356px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  color: white;
+}
