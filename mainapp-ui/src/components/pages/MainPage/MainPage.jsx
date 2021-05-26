@@ -37,7 +37,7 @@ export const MainPage = () => {
         </article>
         <article className="content__block content__threads">
           {loading && loading}
-          {res ? (
+          {res && (
             res.map((elem) => (
               <div className="thread" key={elem.id}>
                 <Link
@@ -49,8 +49,6 @@ export const MainPage = () => {
                 </Link>
               </div>
             ))
-          ) : (
-            <h3>Loading...</h3>
           )}
         </article>
       </div>

@@ -17,7 +17,8 @@ export const apiMethods = {
           return {
             user: {
               email: body.user.email,
-              username: body.user.username
+              username: body.user.username,
+              isStaff: body.user.isStaff
             },
             token: body.user.token,
             status: status
@@ -45,7 +46,6 @@ export const apiMethods = {
         if (status >= 200 && status < 300) {
           return {};
         } else {
-          console.log('body: ', body)
           return {
             error: body.errors,
             status: status

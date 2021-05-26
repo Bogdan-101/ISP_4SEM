@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Thread.css";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { NewCommentForm } from "../NewCommentForm";
 import { NoComments } from "./NoComments";
 import { CommentsBlock } from "./CommentsBlock/CommentsBlock";
@@ -14,8 +14,11 @@ export const Thread = ({
   date,
   comments,
   allComments,
+  is_blessed,
+  is_staff,
 }) => {
   const [isComment, setIsComment] = useState(false);
+  const isAuth = useSelector((state) => state.login.isAuth);
 
   function handleClick() {
     setIsComment(!isComment);
@@ -29,18 +32,27 @@ export const Thread = ({
         </div>
         <h3 className="thread__title">{title}</h3>
         <p className="thread__text">{content}</p>
-        <button
-          onClick={handleClick}
-          className="thread__allComments thread__allButton"
-        >
-          comment
-        </button>
-        {isComment && (
-          <DraggableBlock
-            closeHandle={handleClick}
-            text="reply to thread"
-            render={() => <NewCommentForm id={id} closeHandle={handleClick} />}
-          />
+        {is_blessed && (
+          <p className="thread_blessed">Anomie благословил этот пост.</p>
+        )}
+        {isAuth && (
+          <>
+            <button
+              onClick={handleClick}
+              className="thread__allComments thread__allButton"
+            >
+              comment
+            </button>
+            {isComment && (
+              <DraggableBlock
+                closeHandle={handleClick}
+                text="reply to thread"
+                render={() => (
+                  <NewCommentForm id={id} closeHandle={handleClick} />
+                )}
+              />
+            )}
+          </>
         )}
       </div>
       <div className="thread__comments">

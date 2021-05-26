@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, isValidElement } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../../../reducers/UserSlice";
 import "./LoginForm.css";
@@ -14,7 +14,6 @@ export const LoginForm = () => {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      console.log(isEmailValid, isPasswordValid)
       if (isEmailValid && isPasswordValid) {
         dispatch(login({ email: email, password: password }));
       }
@@ -38,7 +37,6 @@ export const LoginForm = () => {
       setPassword(value);
       setIsPasswordValid(value.length > 7)
     }
-    console.log('email: ' + isEmailValid, '\npassword: ' + isPasswordValid)
   }
 
   return (

@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import './NewCommentForm.css';
+import { useSelector } from 'react-redux';
 
 
 export const NewCommentForm = ({ id, closeHandle }) => {
     const [content, setContent] = useState('');
+    const token = useSelector(state => state.login.token)
 
     function handleTextAreaChange(e) {
         setContent(e.target.value);
@@ -16,7 +18,8 @@ export const NewCommentForm = ({ id, closeHandle }) => {
         fetch(endpoint, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `token ${token}`
             },
             body: JSON.stringify(data)
         }).then((res) => res.json).then((data) => {

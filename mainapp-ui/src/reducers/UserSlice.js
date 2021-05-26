@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserApi } from "../api/UserAPI";
+import { setCookie } from '../helpers/Cookies';
 
 export const UserSlice = createSlice({
   name: "login",
@@ -23,7 +24,6 @@ export const UserSlice = createSlice({
       state.isLoading = false;
     },
     api_error: (state, action) => {
-      console.log(action.payload)
       state.error = action.payload;
       state.isLoading = false;
     },
@@ -36,10 +36,13 @@ export const UserSlice = createSlice({
       state.user = {};
       state.token = '';
     },
+    set_token: (state, action) => {
+      state.token = action.payload;
+    },
   },
 });
 
-export const { logout, api_success, api_error, set_loader, registered } =
+export const { logout, api_success, api_error, set_loader, registered, set_token } =
   UserSlice.actions;
 
 export function login(loginObj) {
@@ -47,12 +50,13 @@ export function login(loginObj) {
     dispatch(set_loader())
     const loginResult = await UserApi.login(loginObj);
     if (loginResult.user) {
-      dispatch(
-        api_success({
-          user: loginResult.user,
-          token: loginResult.token
-        })
-      )
+      setCookie('authToken', `token ${loginResult.token}`, 60);
+        dispatch(
+          api_success({
+            user: loginResult.user,
+            token: loginResult.token
+          })
+        )
     } else {
       dispatch(api_error(loginResult.error));
     }
@@ -63,16 +67,13 @@ export function register(registerObj) {
   return async (dispatch) => {
     dispatch(set_loader())
     const registerResult = await UserApi.register(registerObj);
-    console.log(registerResult)
     if (registerResult.error) {
-      console.log('error, error obj: ', registerResult.error)
       let error_message = '';
       for (const item in registerResult.error) {
         error_message = error_message + "\n" + registerResult.error[item][0]
       }
       dispatch(api_error(error_message));
     } else {
-      console.log('success, error is: ', registerResult.error)
       dispatch(registered())
     }
   };

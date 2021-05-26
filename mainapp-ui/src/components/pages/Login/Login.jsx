@@ -15,10 +15,8 @@ export const Login = () => {
 
   
   useEffect(() => {
-    console.log('isAuth changed, isAuth:', isAuth)
     if (history && isAuth) {
-      console.log('redirecting')
-      history.push('/');
+      history.goBack();
     }
   }, [isAuth, history])
 

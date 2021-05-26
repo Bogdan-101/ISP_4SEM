@@ -10,13 +10,13 @@ export const useFetch = (path = SERVER_URL) => {
   const [loading, setLoading] = useState(false);
   const token = useSelector((state) => state.login.token);
   const get = useCallback(
-    async function (getPath) {
+    async function (getPath, token_optional) {
       setIsError(false);
       setServerResponse(null);
       setLoading(LoadingComponent);
-      axios(path.concat(getPath), {
+      await axios(path.concat(getPath), {
         headers: {
-          Authorization: `token ${token}`,
+          Authorization: token_optional ? token_optional : `token ${token}`
         },
       }).then(
         (res) => {
@@ -31,7 +31,7 @@ export const useFetch = (path = SERVER_URL) => {
         }
       );
     },
-    [path]
+    [path, token]
   );
 
   const post = useCallback(
