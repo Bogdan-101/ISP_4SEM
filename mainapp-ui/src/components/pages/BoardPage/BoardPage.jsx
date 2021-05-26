@@ -14,8 +14,9 @@ export const BoardPage = ({ match }) => {
   const isAuth = useSelector((state) => state.login.isAuth);
 
   useEffect(() => {
-    methods.get(`/api/board/${id}/`);
-  }, [id]);
+    if (!isCreate)
+      methods.get(`/api/board/${id}/`);
+  }, [id, isCreate]);
 
   function handleClick() {
     setCreate(!isCreate);

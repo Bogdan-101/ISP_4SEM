@@ -6,8 +6,15 @@
     margin-left: 10px;
 }
 
+.thread__main {
+    padding: 15px;
+    background: var(--theme_default_postbg);
+    border-radius: 7px;
+}
+
 .thread__title {
     text-align: end;
+    color: var(--theme_default_title);
 }
 
 .thread__text {
@@ -20,4 +27,22 @@
 .thread__detail {
     font-size: 0.9em;
     color: var(--theme_default_alttext);
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--theme_default_border);
+}
+
+.thread__bless {
+    margin-left: 25px;
+    border: 1px solid var(--theme_default_btnborder);
+    border-radius: 3px;
+    color: var(--theme_default_btntext);
+    background: var(--theme_default_btnbg);
+}
+
+.thread__bless:hover {
+    background: var(--theme_default_btnbghover);
+}
+
+.thread__blessed {
+    color: red;
 }

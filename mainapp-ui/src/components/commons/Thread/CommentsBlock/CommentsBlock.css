@@ -35,3 +35,23 @@
     border-radius: 4px;
     padding: 5px;
 }
+
+.thread__missedCount {
+    margin-right: 10px;
+}
+
+.thread__blessed {
+    color: red;
+}
+
+.thread__bless {
+    margin-left: 25px;
+    border: 1px solid var(--theme_default_btnborder);
+    border-radius: 3px;
+    color: var(--theme_default_btntext);
+    background: var(--theme_default_btnbg);
+}
+
+.thread__bless:hover {
+    background: var(--theme_default_btnbghover);
+}

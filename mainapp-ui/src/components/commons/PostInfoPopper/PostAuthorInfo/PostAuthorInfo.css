@@ -1,0 +1,14 @@
+.author__start {
+    font-weight: bold;
+}
+
+.author__button {
+    color: var(--theme_default_link);
+    text-decoration: none;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.author__button:hover {
+    color: 1px solid var(--theme_default_hover);
+}

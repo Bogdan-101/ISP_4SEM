@@ -5,6 +5,8 @@ import { NewCommentForm } from "../NewCommentForm";
 import { NoComments } from "./NoComments";
 import { CommentsBlock } from "./CommentsBlock/CommentsBlock";
 import { DraggableBlock } from "../DraggableBlock";
+import axios from "axios";
+import { SERVER_URL } from "../../../helpers/constants";
 
 export const Thread = ({
   title,
@@ -19,21 +21,42 @@ export const Thread = ({
 }) => {
   const [isComment, setIsComment] = useState(false);
   const isAuth = useSelector((state) => state.login.isAuth);
+  const token = useSelector((state) => state.login.token);
 
   function handleClick() {
     setIsComment(!isComment);
+  }
+
+  function bless() {
+    axios.put(
+      SERVER_URL + `/api/thread/${id}/`,
+      { is_blessed: is_blessed ? "False" : "True" },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `token ${token}`,
+        },
+      }
+    );
   }
 
   return (
     <div className="thread">
       <div className="thread__main">
         <div className="thread__detail">
-          Anon {date} №{number}
+          <span>
+            Anon {date} №{number}
+          </span>
+          {is_staff && (
+            <button onClick={bless} className="thread__bless">
+              {is_blessed ? "Отнять благословление" : "Благословить"}
+            </button>
+          )}
         </div>
         <h3 className="thread__title">{title}</h3>
         <p className="thread__text">{content}</p>
         {is_blessed && (
-          <p className="thread_blessed">Anomie благословил этот пост.</p>
+          <p className="thread__blessed">Anomie благословил этот пост.</p>
         )}
         {isAuth && (
           <>

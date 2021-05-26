@@ -10,10 +10,11 @@ export const ThreadDetailPage = ({ match }) => {
   const id = match.params.id;
   const [methods, res, loading, isError] = useFetch();
   const isAuth = useSelector((state) => state.login.isAuth);
+  const token = useSelector((state) => state.login.token);
 
   useEffect(() => {
     methods.get(`/api/thread/${id}/`);
-  }, [id]);
+  }, [id, token]);
 
   return (
     <>

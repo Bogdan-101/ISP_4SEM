@@ -1,0 +1,23 @@
+.popper_content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    border: 2px solid var(--theme_default_btntext);
+    border-radius: 3px;
+    background: var(--theme_default_bg);
+    padding: 5px 5px 15px 5px;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.popper__content--invisible {
+    display: none;
+}
+
+.popper__button {
+    margin-left: 15px;
+}
+
+.popper__header {
+    border-bottom: 1px solid var(--theme_default_border);
+}

@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import './NewCommentForm.css';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router'
 
 
 export const NewCommentForm = ({ id, closeHandle }) => {
     const [content, setContent] = useState('');
     const token = useSelector(state => state.login.token)
+    const history = useHistory();
 
     function handleTextAreaChange(e) {
         setContent(e.target.value);
@@ -25,6 +27,7 @@ export const NewCommentForm = ({ id, closeHandle }) => {
         }).then((res) => res.json).then((data) => {
             setContent('');
             closeHandle && closeHandle();
+            history.go(0)
         }).catch((e) => {
             alert(e)
         })
