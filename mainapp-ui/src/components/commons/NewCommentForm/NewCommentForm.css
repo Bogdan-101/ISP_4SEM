@@ -13,3 +13,7 @@
 .form__submit {
 
 }
+
+.form__file {
+    margin-bottom: 5px;
+}

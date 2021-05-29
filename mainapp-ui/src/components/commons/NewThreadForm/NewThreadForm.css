@@ -1,13 +1,26 @@
 .form {
     width: 750px;
+    gap: 25px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    gap: 25px;
+}
+
+.form__content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.form__texts {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-right: 70px;
 }
 
 .form__input {
-
+    margin-bottom: 5px;
 }
 
 .form__textarea {

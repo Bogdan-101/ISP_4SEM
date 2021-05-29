@@ -7,6 +7,8 @@ import { CommentsBlock } from "./CommentsBlock/CommentsBlock";
 import { DraggableBlock } from "../DraggableBlock";
 import axios from "axios";
 import { SERVER_URL } from "../../../helpers/constants";
+import { PostInfoPopper } from "../PostInfoPopper";
+import { ImageElement } from '../ImageElement';
 
 export const Thread = ({
   title,
@@ -18,9 +20,12 @@ export const Thread = ({
   allComments,
   is_blessed,
   is_staff,
+  ownerId,
+  image
 }) => {
   const [isComment, setIsComment] = useState(false);
   const isAuth = useSelector((state) => state.login.isAuth);
+  const isStaff = useSelector((state) => state.login.user.isStaff);
   const token = useSelector((state) => state.login.token);
 
   function handleClick() {
@@ -39,7 +44,7 @@ export const Thread = ({
       }
     );
   }
-
+  
   return (
     <div className="thread">
       <div className="thread__main">
@@ -52,7 +57,9 @@ export const Thread = ({
               {is_blessed ? "Отнять благословление" : "Благословить"}
             </button>
           )}
+          {isStaff && <PostInfoPopper userId={ownerId} />}
         </div>
+        {image && <ImageElement path={image} />}
         <h3 className="thread__title">{title}</h3>
         <p className="thread__text">{content}</p>
         {is_blessed && (

@@ -45,12 +45,25 @@ class ThreadViewSet(viewsets.ModelViewSet):
             board = Board.objects.filter(name=thread_data["board_name"]).first()
             threads_count = Thread.objects.filter(blog_category_id=str(board.id)).count() + Comment.objects.filter(
                 related_board_id=str(board.id)).count() + 1
-            new_thread = Thread(blog_category=board, title=thread_data["title"],
-                                slug=str(str(board.slug) + "-" + str(threads_count)), owner=request.user,
-                                content=thread_data["content"])
-            new_thread.save()
+            if 'image' in thread_data:
+                new_thread = Thread(blog_category=board, title=thread_data["title"],
+                                    slug=str(str(board.slug) + "-" + str(threads_count)), owner=request.user,
+                                    content=thread_data["content"], image=thread_data["image"])
+                new_thread.save()
+            else:
+                new_thread = Thread(blog_category=board, title=thread_data["title"],
+                                    slug=str(str(board.slug) + "-" + str(threads_count)), owner=request.user,
+                                    content=thread_data["content"])
+                new_thread.save()
+
             return Response(ThreadSerializer(new_thread).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        updating_thread = Thread.objects.get(pk=kwargs['pk'])
+        updating_thread.is_blessed = request.data["is_blessed"]
+        updating_thread.save()
+        return Response(status=status.HTTP_200_OK)
 
     def get_serializer_class(self):
         return self.action_to_serializer.get(
@@ -74,9 +87,23 @@ class CommentViewSet(viewsets.ModelViewSet):
             comment_count = Thread.objects.filter(
                 blog_category_id=str(related_thread.blog_category.id)).count() + Comment.objects.filter(
                 related_board_id=str(related_thread.blog_category.id)).count() + 1
-            new_comment = Comment(related_thread=related_thread, content=comment_data["content"], owner=request.user,
-                                  slug=str(board_name + "-" + str(comment_count)),
-                                  related_board=related_thread.blog_category)
-            new_comment.save()
+            if 'image' in comment_data:
+                new_comment = Comment(related_thread=related_thread, content=comment_data["content"],
+                                      owner=request.user,
+                                      slug=str(board_name + "-" + str(comment_count)),
+                                      related_board=related_thread.blog_category, image=comment_data["image"])
+                new_comment.save()
+            else:
+                new_comment = Comment(related_thread=related_thread, content=comment_data["content"],
+                                      owner=request.user,
+                                      slug=str(board_name + "-" + str(comment_count)),
+                                      related_board=related_thread.blog_category)
+                new_comment.save()
             return Response(CommentSerializer(new_comment).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        updating_comment = Comment.objects.get(pk=kwargs['pk'])
+        updating_comment.is_blessed = request.data["is_blessed"]
+        updating_comment.save()
+        return Response(status=status.HTTP_200_OK)

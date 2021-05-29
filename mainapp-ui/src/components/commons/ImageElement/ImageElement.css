@@ -1,0 +1,36 @@
+.image {
+    margin: 10px 5px;
+}
+
+.image__content {
+    max-width: 240px;
+}
+
+.image__content:hover {
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(13, 13, 13, 0.6);
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+}
+
+.modal__wrapper {
+    height: max-content;
+}
+
+.modal__image {
+    margin-top: 5vh;
+}
+
+.modal--visible {
+    display: flex;
+    justify-content: center;
+    vertical-align: center;
+}

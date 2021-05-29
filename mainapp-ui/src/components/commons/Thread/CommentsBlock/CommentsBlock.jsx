@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { SERVER_URL } from "../../../../helpers/constants";
 import { useSelector } from "react-redux";
-import { PostInfoPopper } from '../../../commons/PostInfoPopper';
+import { PostInfoPopper } from "../../../commons/PostInfoPopper";
+import { ImageElement } from "../../ImageElement";
 
 export const CommentsBlock = ({ comments, allComments, id }) => {
   const isStaff = useSelector((state) => state.login.user.isStaff);
@@ -42,8 +43,9 @@ export const CommentsBlock = ({ comments, allComments, id }) => {
                 {elem.is_blessed ? "Отнять благословление" : "Благословить"}
               </button>
             )}
-            {isStaff && <PostInfoPopper userId={elem.owner}/>}
+            {isStaff && <PostInfoPopper userId={elem.owner} />}
           </div>
+          {elem.image && <ImageElement path={elem.image} />}
           <p className="thread__text">{elem.content}</p>
           {elem.is_blessed && (
             <p className="thread__blessed">Anomie благословил этот пост.</p>
@@ -52,9 +54,11 @@ export const CommentsBlock = ({ comments, allComments, id }) => {
       ))}
       {allComments && allComments.length !== comments.length && (
         <div className="thread__allButton">
-          <span className="thread__missedCount">Пропущено {allComments.length - comments.length} комментариев</span>
+          <span className="thread__missedCount">
+            Пропущено {allComments.length - comments.length} комментариев
+          </span>
           <Link
-            to={{ pathname: `/thread/${id}`, fromDashboard: false }}
+            to={{ pathname: `/thread/${id}/${}`, fromDashboard: false }}
             className="thread__allComments"
           >
             В тред

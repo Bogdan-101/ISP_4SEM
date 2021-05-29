@@ -60,3 +60,15 @@ class UserRetrieveUpdateAPIView(viewsets.ModelViewSet):
     #     serializer.save()
     #
     #     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserRetrieveById(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        if request.user and not request.user.is_staff:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        user = User.objects.get(pk=kwargs['pk'])
+        serializer = self.serializer_class(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
