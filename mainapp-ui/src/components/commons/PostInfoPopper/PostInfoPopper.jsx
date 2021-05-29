@@ -19,7 +19,7 @@ export const PostInfoPopper = ({ userId }) => {
         },
       },
     ],
-    placement: "top-start",
+    placement: "top-end",
   });
 
   function handleDropDownClick() {

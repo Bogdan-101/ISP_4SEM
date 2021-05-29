@@ -12,6 +12,11 @@
     border-radius: 7px;
 }
 
+.thread__imageAndTitle {
+    display: flex;
+    justify-content: space-between;
+}
+
 .thread__title {
     text-align: end;
     color: var(--theme_default_title);

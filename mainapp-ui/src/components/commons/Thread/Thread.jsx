@@ -59,8 +59,10 @@ export const Thread = ({
           )}
           {isStaff && <PostInfoPopper userId={ownerId} />}
         </div>
-        {image && <ImageElement path={image} />}
-        <h3 className="thread__title">{title}</h3>
+        <div className="thread__imageAndTitle">
+          {image && <ImageElement path={image} />}
+          <h3 className="thread__title">{title}</h3>
+        </div>
         <p className="thread__text">{content}</p>
         {is_blessed && (
           <p className="thread__blessed">Anomie благословил этот пост.</p>

@@ -10,7 +10,6 @@ export const ThreadList = ({ threads }) => {
     <div className="board__boardsList">
       {threads.map((elem) => {
         const date = new Date(elem.pub_date);
-        console.log(elem.image)
         return (
           <Thread
             key={elem.id}

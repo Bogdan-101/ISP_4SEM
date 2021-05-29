@@ -8,10 +8,12 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import loginReducer from "./reducers/UserSlice";
+import ThreadSlice from './reducers/ThreadSlice';
 
 const store = configureStore({
   reducer: {
     login: loginReducer,
+    threads: ThreadSlice
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });

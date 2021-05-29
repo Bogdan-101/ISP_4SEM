@@ -3,7 +3,7 @@ import "./CommentsBlock.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { SERVER_URL } from "../../../../helpers/constants";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { PostInfoPopper } from "../../../commons/PostInfoPopper";
 import { ImageElement } from "../../ImageElement";
 
@@ -58,7 +58,7 @@ export const CommentsBlock = ({ comments, allComments, id }) => {
             Пропущено {allComments.length - comments.length} комментариев
           </span>
           <Link
-            to={{ pathname: `/thread/${id}/${}`, fromDashboard: false }}
+            to={{ pathname: `/thread/${id}`, fromDashboard: false }}
             className="thread__allComments"
           >
             В тред

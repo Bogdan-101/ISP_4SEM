@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { add_thread } from '../../../reducers/ThreadSlice';
 import './NewThreadForm.css';
 
 
@@ -8,6 +9,7 @@ export const NewThreadForm = ({ boardName, closeHandle }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [image, setImage] = useState(null);
+    const dispatch = useDispatch();
     const token = useSelector(state => state.login.token)
 
     function handleInputChange(e) {
@@ -38,6 +40,7 @@ export const NewThreadForm = ({ boardName, closeHandle }) => {
                 'Authorization': `token ${token}`
             }
         }).then((data) => {
+            dispatch(add_thread({boardName, title, content, image: image ? image.name : null}))
             closeHandle && closeHandle()
         }).catch((e) => {
             alert(e)

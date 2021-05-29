@@ -13,7 +13,9 @@ export const ThreadDetailPage = ({ match }) => {
   const token = useSelector((state) => state.login.token);
 
   useEffect(() => {
-    methods.get(`/api/thread/${id}/`);
+    console.log('token: ', token)
+    if (!token.includes('token') && token)
+      methods.get(`/api/thread/${id}/`);
   }, [id, token]);
 
   return (
@@ -21,7 +23,7 @@ export const ThreadDetailPage = ({ match }) => {
       <Header />
       <div className="thread__page">
         {isAuth ? (
-          res && 
+          res && (
             <Thread
               content={res.content}
               title={res.title}
@@ -29,8 +31,9 @@ export const ThreadDetailPage = ({ match }) => {
               date={new Date(res.pub_date).toLocaleString()}
               number={res.slug}
               comments={res.comments}
+              ownerId={res.owner}
             />
-          
+          )
         ) : (
           <NotLoginSign />
         )}

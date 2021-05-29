@@ -25,7 +25,6 @@ function App() {
 
   useEffect(() => {
     if (res) {
-      console.log(res, 'app.js useEffect')
       dispatch(api_success({
         user: {
           email: res.email,
