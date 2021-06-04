@@ -35,6 +35,7 @@ export const UserSlice = createSlice({
       state.isAuth = false;
       state.user = {};
       state.token = '';
+      setCookie('authToken', '', 0);
     },
     set_token: (state, action) => {
       state.token = action.payload;
@@ -50,6 +51,8 @@ export function login(loginObj) {
     dispatch(set_loader())
     const loginResult = await UserApi.login(loginObj);
     if (loginResult.user) {
+      if (loginResult.token.startsWith("b'") && loginResult.token.endsWith("'"))
+        loginResult.token = loginResult.token.slice(2, loginResult.token.length - 1)
       setCookie('authToken', `token ${loginResult.token}`, 60);
         dispatch(
           api_success({

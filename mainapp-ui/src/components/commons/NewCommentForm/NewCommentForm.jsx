@@ -30,7 +30,9 @@ export const NewCommentForm = ({ id, closeHandle }) => {
         },
       })
       .then((data) => {
-        dispatch(add_comment({threadId: id, content: content, image: image ? image.name : null}))
+        setTimeout(() => {
+          dispatch(add_comment({threadId: id, content: content, image: image ? image.name : null}))
+        }, 2000);
         setContent("");
         closeHandle && closeHandle();
       })

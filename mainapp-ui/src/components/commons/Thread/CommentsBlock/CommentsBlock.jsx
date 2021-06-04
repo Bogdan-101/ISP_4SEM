@@ -6,10 +6,12 @@ import { SERVER_URL } from "../../../../helpers/constants";
 import { useSelector, useDispatch } from "react-redux";
 import { PostInfoPopper } from "../../../commons/PostInfoPopper";
 import { ImageElement } from "../../ImageElement";
+import { bless_comment } from '../../../../reducers/ThreadSlice';
 
 export const CommentsBlock = ({ comments, allComments, id }) => {
   const isStaff = useSelector((state) => state.login.user.isStaff);
   const token = useSelector((state) => state.login.token);
+  const dispatch = useDispatch();
 
   function bless(is_blessed, id) {
     axios.put(
@@ -22,6 +24,7 @@ export const CommentsBlock = ({ comments, allComments, id }) => {
         },
       }
     );
+    dispatch(bless_comment({id, is_blessed}))
   }
 
   return (

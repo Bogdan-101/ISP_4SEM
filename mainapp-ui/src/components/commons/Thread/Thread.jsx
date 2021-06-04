@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Thread.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { NewCommentForm } from "../NewCommentForm";
 import { NoComments } from "./NoComments";
 import { CommentsBlock } from "./CommentsBlock/CommentsBlock";
@@ -9,6 +9,7 @@ import axios from "axios";
 import { SERVER_URL } from "../../../helpers/constants";
 import { PostInfoPopper } from "../PostInfoPopper";
 import { ImageElement } from '../ImageElement';
+import { bless_thread } from '../../../reducers/ThreadSlice';
 
 export const Thread = ({
   title,
@@ -27,6 +28,7 @@ export const Thread = ({
   const isAuth = useSelector((state) => state.login.isAuth);
   const isStaff = useSelector((state) => state.login.user.isStaff);
   const token = useSelector((state) => state.login.token);
+  const dispatch = useDispatch();
 
   function handleClick() {
     setIsComment(!isComment);
@@ -43,6 +45,7 @@ export const Thread = ({
         },
       }
     );
+    dispatch(bless_thread({id, is_blessed}))
   }
   
   return (

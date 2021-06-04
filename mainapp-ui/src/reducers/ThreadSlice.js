@@ -89,11 +89,28 @@ export const ThreadSlice = createSlice({
 
       state.threads.unshift(thread);
     },
+    bless_thread: (state, action) => {
+      const {id, is_blessed} = action.payload;
+      state.threads.map((elem) => {
+        if (elem.id === id) {
+          elem.is_blessed = !is_blessed
+        }
+      })
+    },
+    bless_comment: (state, action) => {
+      const {id, is_blessed} = action.payload;
+      state.threads.map((thread) => {
+        thread.comments.map((comment) => {
+          if (comment.id === id)
+            comment.is_blessed = !is_blessed
+        })
+      })
+    }
   },
 },
 );
 
-export const { set_threads, add_comment, add_thread } =
+export const { set_threads, add_comment, add_thread, bless_thread, bless_comment } =
   ThreadSlice.actions;
 
 export default ThreadSlice.reducer;
