@@ -16,7 +16,7 @@ SECRET_KEY = config.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'mainapp',
     'users',
     'corsheaders',
-    'django_extensions'
+    'django_extensions',
 ]
 
 REST_FRAMEWORK = {
@@ -64,7 +64,7 @@ ROOT_URLCONF = 'lab3_isp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'mainapp-ui/build']
+        'DIRS': [BASE_DIR / 'mainapp-ui/build', os.path.join(BASE_DIR, 'templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -137,6 +137,9 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 STATICFILES_DIRS = (
     (BASE_DIR / 'mainapp-ui/build/static'),
